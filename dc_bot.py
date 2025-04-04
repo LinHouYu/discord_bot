@@ -3,7 +3,8 @@ from discord.ext import commands
 import requests
 
 # 机器人令牌
-token = "MTIzMzE0Mjk2OTYzNzI3MzY2MA.G6aqgG.bWO8DdLx5dFzUWGJ6kYawloPWr9JiBbG6lhArE"
+token = "YOUR_BOT_TOKEN"  # 替换为你的 Discord 机器人令牌
+# 机器人 ID
 
 # 设置所需的意图
 intents = discord.Intents.default()
@@ -24,6 +25,7 @@ async def synccommands(ctx):
 
 # 最近消息存储列表
 recent_messages = []
+max_recent_messages = 10  # 设置最大存储消息数量
 
 # 当 bot 准备好时的事件
 @bot.event
@@ -83,22 +85,36 @@ async def mc(interaction: discord.Interaction, server_address: str):
     API_URL = f"https://api.mcsrvstat.us/3/{server_address}"
     try:
         response = requests.get(API_URL)
+        response.raise_for_status()  # 检查 HTTP 请求是否成功
         data = response.json()
-        if data["online"]:
+
+        # 打印调试信息
+        print(f"API 响应数据: {data}")
+
+        # 检查服务器是否在线
+        if data.get("online"):
+            players = data.get("players", {})
+            motd = data.get("motd", {}).get("clean", ["未知"])
+            motd_text = ''.join(motd)  # 将 MOTD 列表合并为字符串
+
             result = (
                 f"🎮 **Minecraft Java 服务器状态**\n"
                 f"**服务器地址**: `{server_address}`\n"
                 f"**IP地址**: `{data.get('ip', '未知')}`\n"
                 f"**端口**: `{data.get('port', '未知')}`\n"
                 f"**版本**: `{data.get('version', '未知')}`\n"
-                f"**在线玩家**: `{data['players']['online']}/{data['players']['max']}`\n"
-                f"**MOTD**: `{''.join(data['motd']['clean'])}`"
+                f"**在线玩家**: `{players.get('online', 0)}/{players.get('max', 0)}`\n"
+                f"**MOTD**: `{motd_text}`"
             )
             await interaction.response.send_message(result)
         else:
             await interaction.response.send_message(f"服务器 `{server_address}` 处于离线状态，无法查询更多信息。")
+    except requests.exceptions.RequestException as req_err:
+        await interaction.response.send_message(f"查询 Minecraft 服务器状态时发生网络错误：{str(req_err)}")
+    except KeyError as key_err:
+        await interaction.response.send_message(f"查询 Minecraft 服务器状态时发生数据解析错误：缺少字段 {str(key_err)}")
     except Exception as e:
-        await interaction.response.send_message(f"查询 Minecraft 服务器状态时发生错误：{str(e)}")
+        await interaction.response.send_message(f"查询 Minecraft 服务器状态时发生未知错误：{str(e)}")
 
 # 定义 /mcbd 指令，用于查询 Minecraft Bedrock 服务器状态
 @bot.tree.command(name="mcbd", description="查询 Minecraft Bedrock 服务器状态")
