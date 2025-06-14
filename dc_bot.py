@@ -3,7 +3,6 @@ from discord.ext import commands
 import requests
 
 # 机器人令牌
-token = "YOUR_BOT_TOKEN"  # 替换为你的 Discord 机器人令牌
 # 机器人 ID
 
 # 设置所需的意图
