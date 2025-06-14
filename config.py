@@ -1,0 +1,1 @@
+TOKEN = "把你的TOKEN替换成这里" # 替换为你的 Discord 机器人令牌
