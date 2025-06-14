@@ -58,6 +58,8 @@ BOT_TOKEN = "你的DiscordBotToken"
 ### ✅ 第四步：运行机器人
 python bot.py
 
+这里我放个视频演示👉 [完整项目视频演示](https://www.bilibili.com/video/BV1wWMDzEENb/?share_source=copy_web&vd_source=af1b836b3dccf648b1eeecc5e9541b1e)
+
 ## 💡 如何添加新功能？
 
 1️⃣ 在 `cogs/` 目录中新增一个 `.py` 文件，例如 `my_feature.py`  
