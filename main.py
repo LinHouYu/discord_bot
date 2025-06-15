@@ -3,6 +3,8 @@ from discord.ext import commands
 import os
 from config import TOKEN
 
+TOKEN = os.getenv("DISCORD_TOKEN")  #如果你不是把他部署到render上可以直接在config.py中设置TOKEN变量然后把这一行注释掉
+
 intents = discord.Intents.default()
 intents.message_content = True
 
