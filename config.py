@@ -1,2 +1,3 @@
-import os
-TOKEN = os.getenv("DISCORD_BOT_TOKEN") #替换成你的Discord Bot Token
+
+TOKEN = "your_token_here" #替换成你的Discord Bot Token
+    
