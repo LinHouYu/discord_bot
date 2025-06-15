@@ -1,1 +1,2 @@
-TOKEN = "your_token_here" # 替换为你的 Discord 机器人令牌
+import os
+TOKEN = os.getenv("DISCORD_BOT_TOKEN") #替换成你的Discord Bot Token
