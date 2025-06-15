@@ -1,1 +1,1 @@
-TOKEN = "MTIzMzE0Mjk2OTYzNzI3MzY2MA.Gl5v1X.1G4EzUkUaLSbhMRFoW3xDMGieR7BBk4tsCE6-c" # 替换为你的 Discord 机器人令牌
+TOKEN = "your_token_here" # 替换为你的 Discord 机器人令牌
