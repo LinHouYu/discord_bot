@@ -1,1 +1,3 @@
-TOKEN = "把你的TOKEN替换成这里" # 替换为你的 Discord 机器人令牌
+
+TOKEN = "your_token_here" #替换成你的Discord Bot Token
+    
