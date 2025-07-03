@@ -41,17 +41,17 @@ class MessageResponder(commands.Cog):
 
 
     # Slash 指令示例
-    @app_commands.command(name="偷吃", description="对某人偷偷干点什么")
-    async def steal_eat(self, interaction: discord.Interaction, target: discord.User):
-        await interaction.response.send_message(f"{interaction.user.mention} 偷吃了 {target.mention}！")
+    # @app_commands.command(name="偷吃", description="对某人偷偷干点什么")
+    # async def steal_eat(self, interaction: discord.Interaction, target: discord.User):
+    #     await interaction.response.send_message(f"{interaction.user.mention} 偷吃了 {target.mention}！")
 
-    @app_commands.command(name="打", description="打一下某人")
-    async def hit(self, interaction: discord.Interaction, target: discord.User):
-        await interaction.response.send_message(f"{interaction.user.mention} 打了 {target.mention}！")
+    # @app_commands.command(name="打", description="打一下某人")
+    # async def hit(self, interaction: discord.Interaction, target: discord.User):
+    #     await interaction.response.send_message(f"{interaction.user.mention} 打了 {target.mention}！")
 
-    @app_commands.command(name="捏", description="捏一捏某人")
-    async def pinch(self, interaction: discord.Interaction, target: discord.User):
-        await interaction.response.send_message(f"{interaction.user.mention} 捏了 {target.mention}！")
+    # @app_commands.command(name="捏", description="捏一捏某人")
+    # async def pinch(self, interaction: discord.Interaction, target: discord.User):
+    #     await interaction.response.send_message(f"{interaction.user.mention} 捏了 {target.mention}！")
 
 async def setup(bot):
     await bot.add_cog(MessageResponder(bot))
