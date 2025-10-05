@@ -24,17 +24,29 @@ class MessageResponder(commands.Cog):
         if len(self.recent_messages) == 2 and self.recent_messages[0] == self.recent_messages[1]:
             await message.channel.send(message.content)
 
-        # 检查是否是回复别人
-        if message.reference and (message.content.startswith("/") or message.content.startswith("$")):
-            # 获取被回复的原始消息对象
-            replied_message = await message.channel.fetch_message(message.reference.message_id)
-            target_user = replied_message.author.mention
-            sender = message.author.mention
-            content = message.content[1:].strip()
+        # # 检查是否是回复别人
+        # if message.reference and (message.content.startswith("/") or message.content.startswith("$")):
+        #     # 获取被回复的原始消息对象
+        #     replied_message = await message.channel.fetch_message(message.reference.message_id)
+        #     target_user = replied_message.author.mention
+        #     sender = message.author.mention
+        #     content = message.content[1:].strip()
+
+            # 去掉开头的 / 或 $
+            raw = re.sub(r'^[/\$]', '', message.content, count=1)
+
+            # 按第一个空格分割
+            parts = raw.split(" ", 1)
+            if len(parts) == 2:
+                action, rest = parts
+                content = f"{action} {target_user} {rest}"
+            else:
+                # 没有空格的情况，比如 /敲了敲
+                content = f"{raw} {target_user}"
 
             # 回复消息，无论是中文（以 / 开头且有中文字符）还是英文（以 $ 开头）
-            if (message.content.startswith("/") and re.search(r'[\u4e00-\u9fff]', content)) or message.content.startswith("$"):
-                await message.reply(f"{sender} {content} {target_user}")
+            if (message.content.startswith("/") and re.search(r'[\u4e00-\u9fff]', raw)) or message.content.startswith("$"):
+                await message.reply(f"{sender} {content}")
                 # 合并分支：如果消息是回复且以 / 或 $ 开头，已在上面实现，无需重复实现
         # 仍处理指令（必要时）
         await self.bot.process_commands(message)
