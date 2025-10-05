@@ -24,13 +24,13 @@ class MessageResponder(commands.Cog):
         if len(self.recent_messages) == 2 and self.recent_messages[0] == self.recent_messages[1]:
             await message.channel.send(message.content)
 
-        # # 检查是否是回复别人
-        # if message.reference and (message.content.startswith("/") or message.content.startswith("$")):
-        #     # 获取被回复的原始消息对象
-        #     replied_message = await message.channel.fetch_message(message.reference.message_id)
-        #     target_user = replied_message.author.mention
-        #     sender = message.author.mention
-        #     content = message.content[1:].strip()
+        # 检查是否是回复别人
+        if message.reference and (message.content.startswith("/") or message.content.startswith("$")):
+            # 获取被回复的原始消息对象
+            replied_message = await message.channel.fetch_message(message.reference.message_id)
+            target_user = replied_message.author.mention
+            sender = message.author.mention
+            # content = message.content[1:].strip()
 
             # 去掉开头的 / 或 $
             raw = re.sub(r'^[/\$]', '', message.content, count=1)
