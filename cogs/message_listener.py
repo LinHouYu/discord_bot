@@ -30,28 +30,40 @@ class MessageResponder(commands.Cog):
             replied_message = await message.channel.fetch_message(message.reference.message_id)
             target_user = replied_message.author.mention
             sender = message.author.mention
-            content = message.content[1:].strip()
+            # content = message.content[1:].strip()
+
+            # 去掉开头的 / 或 $
+            raw = re.sub(r'^[/\$]', '', message.content, count=1)
+
+            # 按第一个空格分割
+            parts = raw.split(" ", 1)
+            if len(parts) == 2:
+                action, rest = parts
+                content = f"{action} {target_user} {rest}"
+            else:
+                # 没有空格的情况，比如 /敲了敲
+                content = f"{raw} {target_user}"
 
             # 回复消息，无论是中文（以 / 开头且有中文字符）还是英文（以 $ 开头）
-            if (message.content.startswith("/") and re.search(r'[\u4e00-\u9fff]', content)) or message.content.startswith("$"):
-                await message.reply(f"{sender} {content} {target_user}")
+            if (message.content.startswith("/") and re.search(r'[\u4e00-\u9fff]', raw)) or message.content.startswith("$"):
+                await message.reply(f"{sender} {content}")
                 # 合并分支：如果消息是回复且以 / 或 $ 开头，已在上面实现，无需重复实现
         # 仍处理指令（必要时）
         await self.bot.process_commands(message)
 
 
     # Slash 指令示例
-    @app_commands.command(name="偷吃", description="对某人偷偷干点什么")
-    async def steal_eat(self, interaction: discord.Interaction, target: discord.User):
-        await interaction.response.send_message(f"{interaction.user.mention} 偷吃了 {target.mention}！")
+    # @app_commands.command(name="偷吃", description="对某人偷偷干点什么")
+    # async def steal_eat(self, interaction: discord.Interaction, target: discord.User):
+    #     await interaction.response.send_message(f"{interaction.user.mention} 偷吃了 {target.mention}！")
 
-    @app_commands.command(name="打", description="打一下某人")
-    async def hit(self, interaction: discord.Interaction, target: discord.User):
-        await interaction.response.send_message(f"{interaction.user.mention} 打了 {target.mention}！")
+    # @app_commands.command(name="打", description="打一下某人")
+    # async def hit(self, interaction: discord.Interaction, target: discord.User):
+    #     await interaction.response.send_message(f"{interaction.user.mention} 打了 {target.mention}！")
 
-    @app_commands.command(name="捏", description="捏一捏某人")
-    async def pinch(self, interaction: discord.Interaction, target: discord.User):
-        await interaction.response.send_message(f"{interaction.user.mention} 捏了 {target.mention}！")
+    # @app_commands.command(name="捏", description="捏一捏某人")
+    # async def pinch(self, interaction: discord.Interaction, target: discord.User):
+    #     await interaction.response.send_message(f"{interaction.user.mention} 捏了 {target.mention}！")
 
 async def setup(bot):
     await bot.add_cog(MessageResponder(bot))

@@ -1,3 +1,7 @@
+```
+机器人最早第一个脚本的起源代码可以完全忽略掉此脚本，以替换成模块化加载
+```
+
 import discord
 from discord.ext import commands
 import requests
