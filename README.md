@@ -40,7 +40,7 @@ discord_bot_project/
 ### ✅ 第一步：克隆项目
 
 ```bash
-git clone https://github.com/你的用户名/discord-bot.git
+git clone https://github.com/zhishifenzi8266/discord-bot.git
 cd discord-bot
 ```
 
